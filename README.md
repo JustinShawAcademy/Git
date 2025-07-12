@@ -87,7 +87,120 @@ By writing the files and folders I don't want to add and commit inside `.gitigno
 
 For big projects, `.gitignore` templates can be found on [gitignore.io](https://www.toptal.com/developers/gitignore)
 
+## Git Branch, Merge, and Conflicts
+### `git branch`: Navigating Parallel Development
+
+`git branch` provides a powerful, flexible, and efficient way to manage changes in a project, enabling individual experimentation, seamless team collaboration, and effective management of different development lines and releases.
+
+![alt text](assets/image11.png)
+
+For this section, we will now be working with the `gittwo` folder and explain how `git branch` works. Inside `gittwo` will be a commited `index.html` folder. Below, I wont show how I did that as it should be trivial now.
+
+Now inside `index.html`, add text that looks like this:
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>git learning</title>
+</head>
+<body>
+    looks good as a project
+</body>
+</html>
+```
+And commit `index.html` again
+
+#### How to create and move onto another branch?
+![alt text](assets/image12.png)
+
+As seen above, `git branch BRANCH NAME` can be used to create a branch within Git. However, our pointer (*) is still pointing onto main. How can be move it?
 
 
+![alt text](assets/image13.png)
 
+with `git checkout BRANCH NAME` we can simply move the point to `nav-bar`. After this add the code below into `nav-bar.html` and commit it to the branch (make sure the pointer is on `nav-bar`)
 
+```html
+<nav>
+    <ul>
+        <li>home</li>
+        <li>about us</li>
+        <li>contact us></li>
+    </ul>
+</nav>
+```
+![alt text](assets/image14.png)
+
+That is so cool! when we moved to the `main` branch we don't have `nar-bar.html` because that is in it's own branch, `nav-bar`.
+
+Now since we are in the `main` branch, create a file `hero-section.html` and copy, paste and commit the code below.
+
+```html
+<section>
+  <h1>Lorem ipsum dolor sit amet,
+    consectetur adipisicing elit. Fugiat,
+    sint.</h1>
+  <p>Lorem ipsum dolor sit amet
+    consectetur adipisicing elit. Nisi
+    eaque, ullam eos laborum adipisci
+    asperiores itaque delectus esse
+    aperiam ex.</p>
+</section>
+```
+
+![alt text](assets/image15.png)
+
+> **NOTE:** It is good practice to commit before swtiching to another branch. Also see shortcuts below
+```
+git branch -c BRANCH NAME
+# or
+git switch -b BRANCH NAME
+# Will create the branch but also move your there at the same time.
+``` 
+
+### `git merge`: Integrating Divergent Lines of Development
+We have `hero-section.html` in the `main` branch and `nav-bar.html` in the `nav-bar` branch, but how can we make it so that `main` can also have `nav-bar.html` from `nav-bar`? 
+
+We can use `git merge` as it's used to combine independent lines of development into a single, unified history.
+
+![alt text](assets/image16.png)
+
+![alt text](assets/image17.png)
+
+> **NOTE:** It is good practice to delete the branch after merging it with `main`. We can simply do with with `git branch -d BRANCH NAME` 
+
+#### Resolving Git Conflicts: Merging Collision
+A merge conflict is a situation where Git can't figure out which version of a particular piece of code or file to keep because both branches you're trying to merge have made **different changes to the same lines in a file**, or one branch has deleted a file that the other branch has modified.
+
+In this example, we will create a new branch called `footer` (git checkout -b footer) and change the contents of `index.html` 
+
+```html
+# Add this to the body 
+<body>
+    looks good as a project
+
+    changes made here (footer branch)
+</body>
+```
+
+Commit the chagnes. Similarly make changes and commit the `index.html` file in `main`.
+
+```html
+<body>
+    looks good as a project
+
+    changes made (main branch)
+</body>
+```
+
+Now let's merge `index.html` in `main` and `index.html` in `footer`. There will obviously a conflict but let's see how to deal with that.
+
+We get this when we try to merge the branchs
+![alt text](assets/image18.png)
+
+And on VSCode, we get this change in `index.html` file. Git doesn't know which one to keep, so it stops the merge and asks us to manually resolve the conflict.
+![alt text](assets/image19.png)
+
+Depending on what we need, we can select what change we want in the top bar.
