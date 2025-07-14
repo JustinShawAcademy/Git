@@ -188,6 +188,7 @@ In this example, we will create a new branch called `footer` (git checkout -b fo
 Commit the chagnes. Similarly make changes and commit the `index.html` file in `main`.
 
 ```html
+# Add this to the body
 <body>
     looks good as a project
 
@@ -204,3 +205,77 @@ And on VSCode, we get this change in `index.html` file. Git doesn't know which o
 ![alt text](assets/image19.png)
 
 Depending on what we need, we can select what change we want in the top bar.
+
+## Git Diff and Stashing
+### `git diff`: Understanding Code Modifications
+Shows the differences between various states of your repository. It helps see exactly what changes are made, what changes are staged for a commit, or what changes exist between different commits or branches.
+
+#### Understanding `--- a/file` and `+++ b/file`
+- `--- a/path/to/file`: This line represents the original version of the file, or the "before" state. The `a/` prefix is a convention used by Git to denote the "source" or "old" version of the file being compared.
+
+- `+++ b/path/to/file`: This line represents the new version of the file, or the "after" state. The `b/` prefix is a convention used by Git to denote the "destination" or "new" version of the file being compared.
+
+`a` typically refers to the state of the file in the staging area (what's been git added, or the last committed version if nothing is staged), and `b` refers to the current state of the file in your working directory (what you're currently editing).
+
+#### Example
+in `main`, change the `index.html` body to have this contents. Then `git add .` it :
+```html
+# BEFORE
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>git learning</title>
+</head>
+<body>
+    looks good as a project
+
+    changes made (main branch)
+</body>
+</html>
+```
+```html
+# AFTER 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>git learning</title>
+</head>
+<body>
+    I would love add nav bar here
+
+    project looks good
+
+    changes made (main branch)
+</body>
+</html>
+```
+When we do `git diff --staged`, we can see the changes that have been made to `index.html`
+![alt text](assets/image20.png)
+
+
+### `git stash`: Temporarily Saving Uncommitted Changes
+when we have changes in your working directory (files modified or staged) that are not  ready to commit yet, but you need a clean working directory to do something else such as which to another branch.
+
+#### Example
+Create a new branch with `git checkout -b bugfix`. Within `index.html` we add this to the body
+```html
+<body>
+    I would love add nav bar here
+
+    project looks good
+
+    changes made (main branch)
+
+    *working on bug fix here*
+</body>
+```
+In this scenario, what if we need to switch onto another branch such as `main` while working on the `bugfix` branch? This is where `git stash` is used.
+
+![alt text](<Screenshot 2025-07-14 at 11.44.08 AM.png>)
+Once `git stash` has been used, we can move to other branchs freely. `git stash pop` is used to unstash.
+
+> NOTE: use `git stash list` to see all the stashs that have been made
