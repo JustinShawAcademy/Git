@@ -275,7 +275,38 @@ Create a new branch with `git checkout -b bugfix`. Within `index.html` we add th
 ```
 In this scenario, what if we need to switch onto another branch such as `main` while working on the `bugfix` branch? This is where `git stash` is used.
 
-![alt text](<Screenshot 2025-07-14 at 11.44.08 AM.png>)
+![alt text](assets/image21.png)
 Once `git stash` has been used, we can move to other branchs freely. `git stash pop` is used to unstash.
 
 > NOTE: use `git stash list` to see all the stashs that have been made
+
+## Pushing Code to GitHub
+for this demo, I created a practice repo called `git-test`. Once created, it shows a page like this.
+
+![alt text](assets/image22.png)
+
+In most of the CLI commands below, we got to understand what they do.
+```
+echo "# git-test" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/JustinShawAcademy/git-test.git
+git push -u origin main
+```
+
+`git remote add <name> <URL>`:  This command is used to add a new **remote repository** to your local Git repository.
+- `<name>`: This is a short, memorable name for the remote repository. This name acts as an alias for the full URL.
+- `<URL>`: This is the actual URL of the remote repository (e.g., https://github.com/username/repo.git) 
+
+Example: `git remote add origin https://github.com/myuser/myrepo.git`.
+This command tells your local repository, "Hey, there's a remote repository at https://github.com/myuser/myrepo.git, and from now on, I'll refer to it as origin."
+
+> **NOTE:** `git remove -v` lists the remote repositories that are configured onto the current local Git repository, and for each remote, it shows the URL(s) that Git uses for both fetching (downloading) and pushing (uploading) operations.
+
+`git push -u origin main` (`git push --set-upstream origin main`) does two important thigns
+1. Pushes your local main branch to the origin remote
+2. Sets the upstream (tracking) branch for your local main branch
+
+> **NOTE:** What does "setting the upstream branch" mean? In the future, when you are on your local main branch, you can simply type git push (without specifying origin main) and Git will automatically know to push your changes to origin/main. Similarly, git pull will automatically pull changes from origin/main.
