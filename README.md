@@ -281,6 +281,12 @@ Once `git stash` has been used, we can move to other branchs freely. `git stash 
 > NOTE: use `git stash list` to see all the stashs that have been made
 
 ## Pushing Code to GitHub
+### The newer way
+Using the GitHub CLI locally on my machine is the easiest way I have found so far. 
+
+### (ADD COMMANDS HERE LATER)
+
+### The older way
 for this demo, I created a practice repo called `git-test`. Once created, it shows a page like this.
 
 ![alt text](assets/image22.png)
